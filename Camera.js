@@ -20,6 +20,7 @@ class Camera{
         console.log('TopLeft',this.topLeft)
     }
     ApplyTransformations(ctx){
+        //Call this before you draw to the canvas, after drawing use ctx.resetTransform()
         ctx.scale(this.zoom,this.zoom)
         ctx.translate(-this.topLeft.x,-this.topLeft.y)
     }
@@ -33,11 +34,16 @@ class Camera{
         this._updateVariables();
     }
     WorldPosToCanvasPos(worldPos){
-        let canvasPos = {
+        return {
             x:worldPos.x - this.topLeft.x,
             y:worldPos.y - this.topLeft.y
         }
-        return canvasPos
+    }
+    CanvasPosToWorldPos(canvasPos){
+        return {
+            x:canvasPos.x + this.topLeft.x,
+            y:canvasPos.y + this.topLeft.y
+        }
     }
     set zoom(val){
         this._zoom = val

@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext('2d')
 const map = new Map()
 const keyboard = new Keyboard()
-const mouse = new Mouse(canvas)
+const mouse = new Mouse(canvas,mouseMove,mouseClick)
 const editor = new Editor()
 const camera = new Camera(canvas.width,canvas.height)
 const tileTypes = {
@@ -12,6 +12,14 @@ const tileTypes = {
 {
     let startingCameraPos = {x:0,y:0}
     camera.CenterOn(startingCameraPos)
+}
+
+function mouseClick(){
+    console.log('yo')
+}
+
+function mouseMove(){
+    console.log('yoyoyoyo')
 }
 
 function Start(){
@@ -36,16 +44,17 @@ function Draw(){
             ctx.strokeRect(tile.pixelX,tile.pixelY,32,32)
         }
     })
+
+
     ctx.resetTransform()
-    //ctx.scale(camera.zoom,camera.zoom)
 }
 
 function Update(){
     if(keyboard.keys['-']){
-        camera.zoom -= 0.01
+        camera.zoom *= 0.99
     }
     if(keyboard.keys['=']){
-        camera.zoom += 0.01
+        camera.zoom *= 1.01
     }
     if(keyboard.keys['w']){
         camera.y--
